@@ -2,6 +2,7 @@ import http, { METHODS } from "http";
 import express from "express";
 import { Socket, Server } from "socket.io";
 import cors from "cors";
+import sequelize from "./utils/db"
 
 const app = express();
 app.use(express.json()); 
@@ -15,10 +16,14 @@ const io = new Server(server, {
     }
 })
 
+app.use(cors());
+
 io.on("connection", (socket: Socket)=>{
     console.log("New Connection established", socket.id)
 })
-
+sequelize.sync().then(()=>{
+    
+})
 server.listen(3000, ()=>{
     console.log("Port is listening to 3000");
 })
