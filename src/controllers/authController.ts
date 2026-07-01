@@ -97,11 +97,14 @@ const login: customfunc = async (req, res, next) => {
             return;
         }
 
-        const token = jwt.sign({
+        const authtoken = jwt.sign({
             userId: user.id,
         }, process.env.JWT_SECRET as string, {expiresIn: '3d'})
 
-        console.log(token);
+        res.cookie("token", authtoken, {
+            httpOnly: true,
+            maxAge:  86400000
+        })
 
         res.redirect('/homepage')
 

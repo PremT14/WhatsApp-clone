@@ -1,4 +1,4 @@
-import { type Request, type Response, type NextFunction } from "express";
+import {   Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import type { UUID } from "node:crypto";
 
@@ -17,16 +17,18 @@ declare global{
 }
 
 const isAuth= async (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.get('Authorization');
+    const authHeader:string = req.cookies.token;
 
     if (!authHeader) {
+        console.log("---------reached inside if check--------", authHeader)
         res.status(401).send('Authorization failed');
         return;
     }
 
-    const token = authHeader.split(' ')[1] as string;
+    const token = authHeader;
     try {
         req.user = jwt.verify(token, process.env.JWT_SECRET as string) as jwtPayload;
+        // console.log("--------after verification----------------", req.user);
         if(!req.user){
             res.status(404).send('Authorization failed token not found');
             return;

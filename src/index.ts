@@ -5,11 +5,12 @@ import path from "path";
 import sequelize from "./utils/db"
 import authRoutes from "./routes/authRoutes"
 import homeRoutes from "./routes/homeRoutes"
+import cookieParser from "cookie-parser";
 
 
 const app = express();
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
