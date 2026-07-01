@@ -1,6 +1,7 @@
 import User from "../models/user";
 import bcrypt from "bcrypt"
 import { Request, Response, NextFunction } from "express"
+import jwt from "jsonwebtoken"
 
 interface customfunc {
     (par1: Request, par2: Response, par3: NextFunction): void;
@@ -49,7 +50,7 @@ const signUp: customfunc = async (req, res, next) => {
 
         console.log("User created-------------", user);
 
-        res.redirect(' /login')
+        res.redirect('/login')
 
     } catch (error) {
         console.log("Server Error while signUp", error);
@@ -96,10 +97,13 @@ const login: customfunc = async (req, res, next) => {
             return;
         }
 
-        res.status(404).json({
-            success: true,
-            message: "Entry granted"
-        })
+        const token = jwt.sign({
+            userId: user.id,
+        }, process.env.JWT_SECRET as string, {expiresIn: '3d'})
+
+        console.log(token);
+
+        res.redirect('/homepage')
 
     } catch (error) {
         console.log("Server Error while signUp", error);

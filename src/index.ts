@@ -4,6 +4,7 @@ import { Socket, Server } from "socket.io";
 import path from "path";
 import sequelize from "./utils/db"
 import authRoutes from "./routes/authRoutes"
+import homeRoutes from "./routes/homeRoutes"
 
 
 const app = express();
@@ -18,6 +19,7 @@ const server = http.createServer(app);
 const io = new Server(server)
 
 app.use(authRoutes)
+app.use(homeRoutes)
 
 io.on("connection", (socket: Socket) => {
     console.log("New Connection established", socket.id);

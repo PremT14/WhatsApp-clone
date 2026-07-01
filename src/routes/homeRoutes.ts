@@ -1,8 +1,8 @@
 import express from "express";
-import {signUp, getSignUp, getlogin, login} from "../controllers/authController"
+import {getHomePage} from "../controllers/homeController"
 
 const router = express.Router();
 
-router.get('/homepage', getSignUp);
+router.get('/homepage', getHomePage);
 
 export default router
