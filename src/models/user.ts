@@ -28,6 +28,10 @@ const User = sequelize.define<userAttributes>('user', {
     password:{
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    mobileNumber:{
+        type: DataTypes.BIGINT,
+        allowNull: false,
     }
 })
 
