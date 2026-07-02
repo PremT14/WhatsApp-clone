@@ -24,6 +24,7 @@ const User = sequelize.define<userAttributes>('user', {
     email:{
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     password:{
         type: DataTypes.STRING,
@@ -32,6 +33,7 @@ const User = sequelize.define<userAttributes>('user', {
     mobileNumber:{
         type: DataTypes.BIGINT,
         allowNull: false,
+        unique: true
     },
     imageUrl:{
         type: DataTypes.STRING,

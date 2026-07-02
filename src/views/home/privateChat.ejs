@@ -16,17 +16,20 @@
     <div class="w-full h-screen grid grid-flow-cols grid-cols-[2fr_5fr]">
 
         <!-- Left Portion of the page -->
-        <div class="overflow-hidden w-full h-full bg-yellow-200 border border-black flex flex-col items-start justify-center gap-1">
-            <!-- Top Left upper part -->
-            <div class="w-full h-30 bg-yellow-200 flex flex-col gap-2 items-center justify-center">
+        <div class="overflow-hidden w-full h-full bg-yellow-200 border border-black flex flex-col items-center justify-start gap-1">
+            <!-- Left upper part -->
+            <div class="w-full h-30 bg-yellow-200 flex flex-col gap-2 items-center justify-start">
                 <div class="w-full flex gap-2">
                     <div><i class="fa-brands fa-whatsapp fa-xl"></i></div>
                     <p>Welcome, <%=user.username%></p>
                 </div>
-                <input class="w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Search">
+                <form class="flex items-around justify-between" action="/finduser" method="post">
+                    <input id="searchUser" class="relative w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Enter" name="search">
+                    <button class="absolute top-6 left-75 mt-3 h-7 w-15 rounded-xl" type="submit">Search</button>
+                </form>
             </div>
 
-            <!-- Top Left lower part -->
+            <!-- Left lower part -->
             <div class="overflow-scroll scrollbar-none">
                 <% if(chat.length > 0) {%>
                     <% chat.forEach((elem)=> {%>
@@ -48,8 +51,8 @@
             <!-- Top Right part -->
             <div class="w-full h-13 bg-black flex gap-2 items-center justify-center">
                 <div class="w-full flex gap-1 items-center justify-start overflow-hidden">
-                    <img class="mx-1 w-8 h-8 object-cover rounded-full" src="https://shoppershine.com/wp-content/uploads/2021/01/SS-PS104-1.jpg" alt="">
-                    <p class="text-white">UserName</p>
+                    <img class="mx-1 w-8 h-8 object-cover rounded-full" src="<%=receiver.imageUrl%>" alt="">
+                    <p class="text-white"><%= receiver.username %></p>
                 </div>
             </div>
 
@@ -70,9 +73,9 @@
                 </div>
             <% } %>
 
-            <!-- Top bottom part -->
+            <!-- Right bottom part -->
             <div class="w-full h-11 flex items-center justify-center">
-                <form class="flex items-center justify-center w-full h-full" action="" method="post">
+                <form class="flex items-center justify-center w-full h-full" action="/send/<%=receiver.id%>" method="post">
                     <input class="mx-1 p-2 h-full w-full bg-white border border-black rounded-xl" type="text" name="message" placeholder="message">
                     <button class="mx-1 h-10 w-11 rounded-full bg-green-600" type="submit">
                         <i class="fa-solid fa-paper-plane"></i>
@@ -86,3 +89,4 @@
 </body>
 
 </html>
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://kit.fontawesome.com/678ee4d480.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="w-full h-screen grid grid-flow-cols grid-cols-[2fr_5fr]">
+
+        <!-- Left Portion of the page -->
+        <div class="overflow-hidden w-full h-full bg-yellow-200 border border-black flex flex-col items-center justify-start">
+            <!-- Top Left upper part -->
+            <div class="w-full h-30 bg-yellow-200 flex flex-col gap-2 items-center justify-start">
+                <div class="w-full flex gap-2">
+                    <div><i class="fa-brands fa-whatsapp fa-xl"></i></div>
+                    <p>Welcome, <%=user.username%></p>
+                </div>
+                <form class="flex items-around justify-between" action="/finduser" method="post">
+                    <input id="searchUser" class="relative w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Enter" name="search">
+                    <button class="absolute top-6 left-75 mt-3 h-7 w-15 rounded-xl" type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- Top Left lower part -->
+            <div class="overflow-scroll scrollbar-none">
+                <% if(finduser) {%>
+                    <a href="/chat/<%=finduser.id%>">
+                        <div class="border border-black rounded-xl m-2 p-1 flex items-center justify-start gap-1 w-87 h-15 active:bg-gray-600">
+                            <img class="mx-1 w-8 h-8 object-cover rounded-full" src="<%= finduser.imageUrl %>" alt="">
+                            <div>
+                                <%= finduser.username %>
+                            </div>
+                        </div>
+                    </a>
+                <%} %>
+            </div>
+        </div>
+
+        <!-- Right Portion of the page -->
+        <div class="w-full h-full bg-[url('https://t3.ftcdn.net/jpg/06/33/35/24/360_F_633352431_g5DcsLFQ1nFDQJsSYnKx9ioL3pz9YtyE.jpg')] bg-cover bg-norepeat border border-black flex flex-col items-center justify-center">
+            <div class="w-70 h-13 bg-black text-white text-xl flex gap-2 items-center justify-center">
+                Welcome to the Chat's App
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

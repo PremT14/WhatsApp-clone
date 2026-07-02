@@ -2,23 +2,19 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/db"
 import type { UUID } from "node:crypto";
 
-export interface messageAttributes extends Model {
+export interface connectionAttributes extends Model {
     id: UUID;
-    senderId: UUID;
+    userId: UUID;
     receiverId: UUID;
 }
 
-const Message = sequelize.define<messageAttributes>('message', {
+const Connection = sequelize.define<connectionAttributes>('connection', {
     id: {
         type: DataTypes.UUID,
         allowNull: false,
         unique: true,
         primaryKey: true
     },
-    message:{
-        type: DataTypes.STRING,
-        allowNull: false
-    }
 })
 
-export default Message;
+export default Connection;

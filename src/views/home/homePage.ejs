@@ -16,14 +16,17 @@
     <div class="w-full h-screen grid grid-flow-cols grid-cols-[2fr_5fr]">
 
         <!-- Left Portion of the page -->
-        <div class="overflow-hidden w-full h-full bg-yellow-200 border border-black flex flex-col items-start justify-center gap-1">
+        <div class="overflow-hidden w-full h-full bg-yellow-200 border border-black flex flex-col items-center justify-start gap-1">
             <!-- Left upper part -->
-            <div class="w-full h-30 bg-yellow-200 flex flex-col gap-2 items-center justify-center">
+            <div class="w-full h-30 bg-yellow-200 flex flex-col gap-2 items-center justify-start">
                 <div class="w-full flex gap-2">
                     <div><i class="fa-brands fa-whatsapp fa-xl"></i></div>
                     <p>Welcome, <%=user.username%></p>
                 </div>
-                <input id="searchUser" class="w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Search" name="search">
+                <form class="flex items-around justify-between" action="/finduser" method="post">
+                    <input id="searchUser" class="relative w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Enter" name="search">
+                    <button class="absolute top-6 left-75 mt-3 h-7 w-15 rounded-xl" type="submit">Search</button>
+                </form>
             </div>
 
             <!-- Left lower part -->
@@ -44,53 +47,34 @@
         </div>
 
         <!-- Right Portion of the page -->
-        <div class="w-full h-full bg-white border border-black flex flex-col items-start justify-start">
-            <!-- Right Top part -->
-            <div class="w-full h-13 bg-black flex gap-2 items-center justify-center">
-                <div class="w-full flex gap-1 items-center justify-start overflow-hidden">
-                    <img class="mx-1 w-8 h-8 object-cover rounded-full" src="https://shoppershine.com/wp-content/uploads/2021/01/SS-PS104-1.jpg" alt="">
-                    <p class="text-white">UserName</p>
-                </div>
-            </div>
-
-            <!-- Right middle part -->
-            <% if(messages.length > 0) {%>
-                <% messages.forEach((elem)=> {%>
-                    <% if(messages.senderId === user.Id) {%>
-                        <div class="w-full h-70 border border-black">
-                            <div class="m-2 p-2 bg-blue-300 text-white">
-                                messages.message
-                            </div>
-                        </div>
-                    <%} %>
-                <%}) %>
-            <%}else { %>
-                <div class="w-full h-133 flex items-center justify-center">
-                    <h2>Start A chat, No chat found</h2>
-                </div>
-            <% } %>
-
-            <!-- Right bottom part -->
-            <div class="w-full h-11 flex items-center justify-center">
-                <form class="flex items-center justify-center w-full h-full" action="" method="post">
-                    <input class="mx-1 p-2 h-full w-full bg-white border border-black rounded-xl" type="text" name="message" placeholder="message">
-                    <button class="mx-1 h-10 w-11 rounded-full bg-green-600" type="submit">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </form>
+        <div class="w-full h-full bg-[url('https://t3.ftcdn.net/jpg/06/33/35/24/360_F_633352431_g5DcsLFQ1nFDQJsSYnKx9ioL3pz9YtyE.jpg')] bg-cover bg-norepeat border border-black flex flex-col items-center justify-center">
+            <div class="w-70 h-13 bg-black text-white text-xl flex gap-2 items-center justify-center">
+                Welcome to the Chat's App
             </div>
         </div>
     </div>
 
-    <script>
+
+<!-- "chat": [
+    {
+      "id": "50fb4148-cae6-437d-9ae0-6fee79ec9ce2",
+      "userId": "b8fdb018-a54f-4362-acce-ae1c04678eeb",
+      "receiverId": "10eb0579-18e3-4786-a1be-0f77a8b67b3e",
+      "message": "Hello, Prem",
+      "createdAt": "2026-07-02T11:21:44.000Z",
+      "updatedAt": "2026-07-02T11:21:44.000Z"
+    }
+  ], -->
+    <!-- <script>
         const search = document.getElementById('searchUser');
         
         search.addEventListener('keydown', (event)=>{
             if(event.key === 'Enter'){
                 event.preventDefault();
-                const getValue = search.value;
+                const getValue = search.innerText;
 
                 if(!getValue){
+                    console.log("-------No value found------", getValue);
                     console.log("-------No value found------");
                     return;
                 }
@@ -110,9 +94,7 @@
                 console.log(response);
             }
         })
-
-
-    </script>
+    </script> -->
 
 </body>
 
