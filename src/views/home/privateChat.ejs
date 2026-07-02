@@ -17,16 +17,16 @@
 
         <!-- Left Portion of the page -->
         <div class="overflow-hidden w-full h-full bg-yellow-200 border border-black flex flex-col items-start justify-center gap-1">
-            <!-- Left upper part -->
+            <!-- Top Left upper part -->
             <div class="w-full h-30 bg-yellow-200 flex flex-col gap-2 items-center justify-center">
                 <div class="w-full flex gap-2">
                     <div><i class="fa-brands fa-whatsapp fa-xl"></i></div>
                     <p>Welcome, <%=user.username%></p>
                 </div>
-                <input id="searchUser" class="w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Search" name="search">
+                <input class="w-90 mx-2 p-2 h-10 rounded-xl border-black border-2" type="text" placeholder="Search">
             </div>
 
-            <!-- Left lower part -->
+            <!-- Top Left lower part -->
             <div class="overflow-scroll scrollbar-none">
                 <% if(chat.length > 0) {%>
                     <% chat.forEach((elem)=> {%>
@@ -45,7 +45,7 @@
 
         <!-- Right Portion of the page -->
         <div class="w-full h-full bg-white border border-black flex flex-col items-start justify-start">
-            <!-- Right Top part -->
+            <!-- Top Right part -->
             <div class="w-full h-13 bg-black flex gap-2 items-center justify-center">
                 <div class="w-full flex gap-1 items-center justify-start overflow-hidden">
                     <img class="mx-1 w-8 h-8 object-cover rounded-full" src="https://shoppershine.com/wp-content/uploads/2021/01/SS-PS104-1.jpg" alt="">
@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <!-- Right middle part -->
+            <!-- Top middle part -->
             <% if(messages.length > 0) {%>
                 <% messages.forEach((elem)=> {%>
                     <% if(messages.senderId === user.Id) {%>
@@ -70,7 +70,7 @@
                 </div>
             <% } %>
 
-            <!-- Right bottom part -->
+            <!-- Top bottom part -->
             <div class="w-full h-11 flex items-center justify-center">
                 <form class="flex items-center justify-center w-full h-full" action="" method="post">
                     <input class="mx-1 p-2 h-full w-full bg-white border border-black rounded-xl" type="text" name="message" placeholder="message">
@@ -80,39 +80,8 @@
                 </form>
             </div>
         </div>
+
     </div>
-
-    <script>
-        const search = document.getElementById('searchUser');
-        
-        search.addEventListener('keydown', (event)=>{
-            if(event.key === 'Enter'){
-                event.preventDefault();
-                const getValue = search.value;
-
-                if(!getValue){
-                    console.log("-------No value found------");
-                    return;
-                }
-
-                const response = fetch('http://localhost:3000//finduser', {
-                    method: "POST",
-                    body: {
-                        search: getValue
-                    }
-                });
-                console.log("-----------response------------",response);
-                if(!response.success){
-                    console.log("---------cannot find user-----------");
-                    return;
-                }
-
-                console.log(response);
-            }
-        })
-
-
-    </script>
 
 </body>
 

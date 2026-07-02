@@ -104,7 +104,8 @@ const getHomePage: customfunc = async(req, res, next) => {
         res.render("home/homePage",{
             pageTitle: "homepage",
             chat: data,
-            user: user
+            user: user,
+            messages: []
         });
     } catch (error) {
         console.log("Error occured while rendering the page", error)
@@ -112,7 +113,57 @@ const getHomePage: customfunc = async(req, res, next) => {
     }
 }
 
+const findUser: customfunc = async (req, res, next) => {
+    try {
+
+        const userId = req.user?.userId;
+        const user = await User.findByPk(userId);
+        if(!user || !userId){
+            res.status(404).json({
+                success: false,
+                message: "Authorization Failed"
+            })
+            return;
+        }
+
+
+        const search = req.body.search;
+        if(!search){
+          res.status(404).json({
+                success: false,
+                message: "Search space is empty"
+          })
+          return;
+        }
+
+        const finduser = await User.findOne({
+          where: {
+            mobileNumber: search
+          }
+        })
+
+        if(!finduser){
+          res.status(404).json({
+                success: false,
+                message: "User with provided mobile number is not present"
+          })
+          return;
+        }
+
+        res.json({
+          success: true,
+          finduser
+        })
+
+    } catch (error) {
+        console.log("Server Error while signUp", error);
+        next(error);
+    }
+}
+
+
 
 export {
-    getHomePage
+    getHomePage,
+    findUser
 }
