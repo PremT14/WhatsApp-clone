@@ -33,11 +33,11 @@
             <div class="overflow-scroll scrollbar-none">
                 <% if(chat.length > 0) {%>
                     <% chat.forEach((elem)=> {%>
-                        <a href="/chat/<%=elem.id%>">
+                        <a href="/chat/<%=elem.receiver.id%>">
                             <div class="border border-black rounded-xl m-2 p-1 flex items-center justify-start gap-1 w-87 h-15 active:bg-gray-600">
-                                <img class="mx-1 w-8 h-8 object-cover rounded-full" src="<%= elem.profile_picture_url %>" alt="">
+                                <img class="mx-1 w-8 h-8 object-cover rounded-full" src="<%= elem.receiver.imageUrl %>" alt="https://i.pinimg.com/236x/15/0f/a8/150fa8800b0a0d5633abc1d1c4db3d87.jpg?nii=t">
                                 <div>
-                                    <%= elem.sender_name %>
+                                    <%= elem.receiver.username %>
                                 </div>
                             </div>
                         </a>
@@ -51,7 +51,7 @@
             <!-- Top Right part -->
             <div class="w-full h-13 bg-black flex gap-2 items-center justify-center">
                 <div class="w-full flex gap-1 items-center justify-start overflow-hidden">
-                    <img class="mx-1 w-8 h-8 object-cover rounded-full" src="<%=receiver.imageUrl%>" alt="">
+                    <img class="mx-1 w-8 h-8 object-cover rounded-full" src="<%=receiver.imageUrl%>" alt="https://i.pinimg.com/236x/15/0f/a8/150fa8800b0a0d5633abc1d1c4db3d87.jpg?nii=t">
                     <p class="text-white"><%= receiver.username %></p>
                 </div>
             </div>

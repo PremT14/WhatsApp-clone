@@ -37,7 +37,8 @@ const User = sequelize.define<userAttributes>('user', {
     },
     imageUrl:{
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "https://i.pinimg.com/236x/15/0f/a8/150fa8800b0a0d5633abc1d1c4db3d87.jpg?nii=t",
+        allowNull: true,
     }
 })
 

@@ -24,10 +24,13 @@ const getHomePage: customfunc = async (req, res, next) => {
       where: {
         userId,
       },
-      include : [{model: User}]
+      include : [{
+        model: User,
+        as: "receiver"
+      }]
     })
 
-    res.json({
+    res.render("home/homePage",{
       pageTitle: "homepage",
       chat,
       user: user,
@@ -110,9 +113,19 @@ const getPrivateChat: customfunc = async (req, res, next) => {
       return;
     }
 
+        const chat = await Connection.findAll({
+      where: {
+        userId,
+      },
+      include : [{
+        model: User,
+        as: "receiver"
+      }]
+    })
+
     res.render("home/privateChat", {
       pageTitle: "homepage",
-      chat: [],
+      chat,
       user: user,
       receiver,
       messages: []
@@ -171,7 +184,7 @@ const sendMessage: customfunc = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Receiver not present",
+      message: "MessageSent",
       newMessage,
       connection
     })
