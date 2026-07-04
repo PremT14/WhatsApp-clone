@@ -22,6 +22,7 @@ const isAuth= async (req: Request, res: Response, next: NextFunction) => {
     if (!authHeader) {
         console.log("---------reached inside if check--------", authHeader)
         res.status(401).send('Authorization failed');
+        res.redirect('/login')
         return;
     }
 
@@ -31,6 +32,7 @@ const isAuth= async (req: Request, res: Response, next: NextFunction) => {
         // console.log("--------after verification----------------", req.user);
         if(!req.user){
             res.status(404).send('Authorization failed token not found');
+            res.redirect('/login');
             return;
         }
         next()

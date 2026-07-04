@@ -1,5 +1,5 @@
 import http from "http";
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import { Socket, Server } from "socket.io";
 import path from "path";
 import sequelize from "./utils/db"
@@ -38,6 +38,12 @@ User.hasMany(Connection, { foreignKey: "userId", as: "chatConnect" });
 User.hasMany(Connection, { foreignKey: "receiverId", as: "receivedChat" });
 Connection.belongsTo(User, { foreignKey: "userId", as: "sender" });
 Connection.belongsTo(User, { foreignKey: "receiverId", as: "receiver" });
+
+
+console.log(io)
+io.on("connection", (socket: Socket)=>{
+    console.log("Connection happened", socket.id)
+})
 
 sequelize.sync().then(() => {
     console.log("DB connection successfull");

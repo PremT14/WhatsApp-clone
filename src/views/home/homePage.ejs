@@ -9,6 +9,8 @@
     </title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://kit.fontawesome.com/678ee4d480.js" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/JS/socket.js"></script>
 
 </head>
 
@@ -54,48 +56,7 @@
         </div>
     </div>
 
-
-<!-- "chat": [
-    {
-      "id": "50fb4148-cae6-437d-9ae0-6fee79ec9ce2",
-      "userId": "b8fdb018-a54f-4362-acce-ae1c04678eeb",
-      "receiverId": "10eb0579-18e3-4786-a1be-0f77a8b67b3e",
-      "message": "Hello, Prem",
-      "createdAt": "2026-07-02T11:21:44.000Z",
-      "updatedAt": "2026-07-02T11:21:44.000Z"
-    }
-  ], -->
-    <!-- <script>
-        const search = document.getElementById('searchUser');
-        
-        search.addEventListener('keydown', (event)=>{
-            if(event.key === 'Enter'){
-                event.preventDefault();
-                const getValue = search.innerText;
-
-                if(!getValue){
-                    console.log("-------No value found------", getValue);
-                    console.log("-------No value found------");
-                    return;
-                }
-
-                const response = fetch('http://localhost:3000//finduser', {
-                    method: "POST",
-                    body: {
-                        search: getValue
-                    }
-                });
-                console.log("-----------response------------",response);
-                if(!response.success){
-                    console.log("---------cannot find user-----------");
-                    return;
-                }
-
-                console.log(response);
-            }
-        })
-    </script> -->
-
+    <script src="../public/JS/socket.js"></script>
 </body>
 
 </html>
