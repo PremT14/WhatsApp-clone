@@ -57,21 +57,29 @@
             </div>
 
             <!-- Top middle part -->
-            <% if(messages.length > 0) {%>
-                <% messages.forEach((elem)=> {%>
-                    <% if(messages.senderId === user.Id) {%>
-                        <div class="w-full h-70 border border-black">
-                            <div class="m-2 p-2 bg-blue-300 text-white">
-                                messages.message
+            <div class="p-1 w-full h-133 overflow-scroll scrollbar-none">
+                <% if(messages.length > 0) {%>
+                    <% messages.forEach((elem)=> {%>
+                        <% if(elem.senderId === user.id) {%>
+                            <div class="w-full h-13">
+                                <div class="w-fit h-fit h-10 overflow-scroll scrollbar-none p-2 w-30 h-10 bg-blue-300 text-white">
+                                    <%= elem.message %>
+                                </div>  
                             </div>
-                        </div>
-                    <%} %>
-                <%}) %>
-            <%}else { %>
-                <div class="w-full h-133 flex items-center justify-center">
-                    <h2>Start A chat, No chat found</h2>
-                </div>
-            <% } %>
+                        <%}else { %>
+                            <div class="w-full h-13 flex items-end justify-end">
+                                <div class="w-fit h-fit w-content h-10 overflow-scroll scrollbar-none p-2 w-30 h-10 bg-green-300 text-white">
+                                    <%= elem.message %>
+                                </div>  
+                            </div>
+                        <% } %>
+                    <%}) %>
+                <%}else { %>
+                    <div class="w-full h-133 flex items-center justify-center">
+                        <h2>Start A chat, No chat found</h2>
+                    </div>
+                <% } %>
+            </div>
 
             <!-- Right bottom part -->
             <div class="w-full h-11 flex items-center justify-center">
@@ -85,6 +93,11 @@
         </div>
 
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="/js/socket.js"></script>
+
 
 </body>
 

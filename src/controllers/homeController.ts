@@ -3,6 +3,7 @@ import User from "../models/user";
 import Message from "../models/messages";
 import { Request, Response, NextFunction } from "express"
 import Connection from "../models/connection";
+import { Op } from "sequelize"
 
 interface customfunc {
   (par1: Request, par2: Response, par3: NextFunction): void;
@@ -113,7 +114,7 @@ const getPrivateChat: customfunc = async (req, res, next) => {
       return;
     }
 
-        const chat = await Connection.findAll({
+    const chat = await Connection.findAll({
       where: {
         userId,
       },
@@ -123,12 +124,24 @@ const getPrivateChat: customfunc = async (req, res, next) => {
       }]
     })
 
+    const message = await Message.findAll({
+      where:{
+        [Op.or]: [
+          {senderId: userId},
+          {senderId: receiverId},
+        ]
+      },
+      order: [['createdAt' , 'ASC']]
+    })
+
+    // console.log(message)
+
     res.render("home/privateChat", {
       pageTitle: "homepage",
       chat,
       user: user,
       receiver,
-      messages: []
+      messages: message
     });
   } catch (error) {
     console.log("Error occured while getting private chat", error)
@@ -150,7 +163,6 @@ const sendMessage: customfunc = async (req, res, next) => {
 
     const receiverId = req.params.receiverId as UUID;
     const receiver = await User.findByPk(receiverId);
-
     if(!receiver){
       res.status(404).json({
         success: false,
@@ -158,6 +170,7 @@ const sendMessage: customfunc = async (req, res, next) => {
       })
       return;
     }
+    
     const message = req.body.message;
 
     let connection = await Connection.findOne({
@@ -184,9 +197,9 @@ const sendMessage: customfunc = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "MessageSent",
+      message: "Message Sent",
       newMessage,
-      connection
+      connection,
     })
 
   } catch (error) {
@@ -202,3 +215,4 @@ export {
   getPrivateChat,
   sendMessage
 }
+

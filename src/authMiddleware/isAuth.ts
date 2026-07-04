@@ -21,7 +21,7 @@ const isAuth= async (req: Request, res: Response, next: NextFunction) => {
 
     if (!authHeader) {
         console.log("---------reached inside if check--------", authHeader)
-        res.status(401).send('Authorization failed');
+        // res.status(401).send('Authorization failed');
         res.redirect('/login')
         return;
     }
