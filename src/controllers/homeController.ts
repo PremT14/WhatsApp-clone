@@ -4,6 +4,9 @@ import Message from "../models/messages";
 import { Request, Response, NextFunction } from "express"
 import Connection from "../models/connection";
 import { Op } from "sequelize"
+import { getIo, userSocket } from "../socket";
+import socket from "socket.io";
+import { Socket } from "node:net";
 
 interface customfunc {
   (par1: Request, par2: Response, par3: NextFunction): void;
@@ -127,8 +130,8 @@ const getPrivateChat: customfunc = async (req, res, next) => {
     const message = await Message.findAll({
       where:{
         [Op.or]: [
-          {senderId: userId},
-          {senderId: receiverId},
+          { senderId: userId, receiverId: receiverId },
+          { senderId: receiverId, receiverId: userId }
         ]
       },
       order: [['createdAt' , 'ASC']]
@@ -170,7 +173,7 @@ const sendMessage: customfunc = async (req, res, next) => {
       })
       return;
     }
-    
+
     const message = req.body.message;
 
     let connection = await Connection.findOne({
@@ -187,6 +190,21 @@ const sendMessage: customfunc = async (req, res, next) => {
         receiverId,
       })
     }
+
+    const io = getIo();
+    if(!io){
+      res.status(500).json({
+        success: false,
+        message: "connection lost"
+      })
+      return;
+    }
+    const receiverSocket = userSocket.get(receiverId) as string;
+    console.log("------------->userSocket table<------------", userSocket)
+
+    io.on("send-message", (message)=>{
+      io.to(receiverSocket).emit("receive-message", message);
+    })
 
     const newMessage = await Message.create({
       id: crypto.randomUUID(),
@@ -215,4 +233,3 @@ export {
   getPrivateChat,
   sendMessage
 }
-

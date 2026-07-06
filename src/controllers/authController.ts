@@ -24,6 +24,7 @@ const signUp: customfunc = async (req, res, next) => {
         const email = req.body.email;
         const mobileNumber = req.body.mobileNumber;
         const password = req.body.password;
+        // const image = req.file?.path.replace(/\\/g, '/');
 
         const isPresent = await User.findOne({
             where: {
@@ -45,7 +46,8 @@ const signUp: customfunc = async (req, res, next) => {
             username,
             email,
             mobileNumber,
-            password: hashedPass
+            password: hashedPass,
+            // imageUrl: image
         })
 
         console.log("User created-------------", user);

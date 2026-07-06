@@ -10,7 +10,7 @@ router.post('/finduser', isAuth, findUser);
 
 router.get('/chat/:receiverId', isAuth, getPrivateChat);
 
-router.post('/send/:receiverId', isAuth, sendMessage);
+router.post('/chat/:receiverId', isAuth, sendMessage);
 
 export default router
 

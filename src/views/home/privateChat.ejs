@@ -57,7 +57,7 @@
             </div>
 
             <!-- Top middle part -->
-            <div class="p-1 w-full h-133 overflow-scroll scrollbar-none">
+            <div id="messageContainer" class="p-1 w-full h-133 overflow-scroll scrollbar-none">
                 <% if(messages.length > 0) {%>
                     <% messages.forEach((elem)=> {%>
                         <% if(elem.senderId === user.id) {%>
@@ -83,9 +83,9 @@
 
             <!-- Right bottom part -->
             <div class="w-full h-11 flex items-center justify-center">
-                <form class="flex items-center justify-center w-full h-full" action="/send/<%=receiver.id%>" method="post">
+                <form class="flex items-center justify-center w-full h-full" action="/chat/<%=receiver.id%>" method="post">
                     <input class="mx-1 p-2 h-full w-full bg-white border border-black rounded-xl" type="text" name="message" placeholder="message">
-                    <button class="mx-1 h-10 w-11 rounded-full bg-green-600" type="submit">
+                    <button id="sendBtn" class="mx-1 h-10 w-11 rounded-full bg-green-600" type="submit">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </form>
@@ -96,7 +96,7 @@
 
     <script src="/socket.io/socket.io.js"></script>
 
-    <script src="/js/socket.js"></script>
+    <script src="/js/privateChat.js"></script>
 
 
 </body>

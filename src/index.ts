@@ -1,6 +1,6 @@
 import dotenv from "dotenv"
 import http from "http";
-import express, { NextFunction } from "express";
+import express from "express";
 import { Socket, Server } from "socket.io";
 import path from "path";
 import sequelize from "./utils/db"
@@ -10,6 +10,8 @@ import cookieParser from "cookie-parser";
 import User from "./models/user";
 import Message from "./models/messages";
 import Connection from "./models/connection";
+import { initSocket } from "./socket"
+import multer, { FileFilterCallback } from "multer";
 
 dotenv.config();
 
@@ -22,10 +24,39 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 const server = http.createServer(app);
-const io = new Server(server)
 
-app.use(authRoutes)
-app.use(homeRoutes)
+// const fileStorage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './uploads');
+//     },
+//     filename: (req, file, cb) => {
+//         const uniqueSuffix = `${Date.now()} - ${file.originalname}`
+//     }
+// })
+
+// const fileFilter = (req, file, cb) =>{
+//     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+//         cb(null, true)
+//     } else {
+//         cb(null, false)
+//     }
+// }
+
+app.use(authRoutes);
+app.use(homeRoutes);
+
+// app.use(
+//     multer({
+//         storage: fileStorage,
+//         fileFilter: (req, file, cb) => {
+//             if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+//                 cb(null, true)
+//             } else {
+//                 cb(null, false)
+//             }
+//         }
+//     }).single('image')
+// );
 
 User.hasMany(Message, { foreignKey: "senderId", as: "sentMessages" });
 User.hasMany(Message, { foreignKey: "receiverId", as: "receivedMessages" });
@@ -37,16 +68,13 @@ User.hasMany(Connection, { foreignKey: "receiverId", as: "receivedChat" });
 Connection.belongsTo(User, { foreignKey: "userId", as: "sender" });
 Connection.belongsTo(User, { foreignKey: "receiverId", as: "receiver" });
 
-
-io.on("connection", (socket: Socket)=>{
-    console.log("Connection happened", socket.id)
-})
+initSocket(server);
 
 sequelize.sync().then(() => {
     console.log("DB connection successfull");
     server.listen(process.env.PORT, () => {
         console.log(`Port is listening to ${process.env.PORT}`);
     })
-}).catch((err)=>{
+}).catch((err) => {
     console.log("DB sync error", err);
 })
