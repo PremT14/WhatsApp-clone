@@ -5,8 +5,6 @@ import { Request, Response, NextFunction } from "express"
 import Connection from "../models/connection";
 import { Op } from "sequelize"
 import { getIo, userSocket } from "../socket";
-import socket from "socket.io";
-import { Socket } from "node:net";
 
 interface customfunc {
   (par1: Request, par2: Response, par3: NextFunction): void;
@@ -199,12 +197,6 @@ const sendMessage: customfunc = async (req, res, next) => {
       })
       return;
     }
-    const receiverSocket = userSocket.get(receiverId) as string;
-    console.log("------------->userSocket table<------------", userSocket)
-
-    io.on("send-message", (message)=>{
-      io.to(receiverSocket).emit("receive-message", message);
-    })
 
     const newMessage = await Message.create({
       id: crypto.randomUUID(),
@@ -212,6 +204,10 @@ const sendMessage: customfunc = async (req, res, next) => {
       receiverId,
       message,
     })
+
+    // const receiverSocket = userSocket.get(receiverId) as string;
+
+    // io.to(receiverSocket).emit("receive-message", message);
 
     res.status(200).json({
       success: true,

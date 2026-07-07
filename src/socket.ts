@@ -38,6 +38,16 @@ const initSocket = (httpServer: nodeServer): Server => {
   
             userSocket.set(userId, socket.id)
             console.log("Connection established", socket.id);
+            console.table(userSocket)
+
+            socket.on("send-message", (payload)=>{
+                const message = payload.message;
+                const receiverId = payload.receiverId;
+
+                const receiverSocket = userSocket.get(receiverId) as string;
+                io?.to(receiverSocket).emit("receive-message", message)
+                console.log("message sent");
+            })
             
             socket.on("disconnect", ()=>{
                 userSocket.delete(userId);

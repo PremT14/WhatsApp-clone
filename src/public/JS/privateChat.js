@@ -1,22 +1,37 @@
 const socket = io();
 const messageCont = document.getElementById('messageContainer')
-const sendBtn = document.getElementById('sendBtn')
+const form = document.getElementById('textForm')
+const messageInput = document.getElementById('messageInput');
+const receiver = document.getElementById("receiver");
     
 socket.on("connect", () => {
     console.log("Client connected");
     console.log("Connection successfull")
 })
 
-messageCont.addEventListener("click", ()=>{
-    socket.emit("send-message", message);
+sendBtn.addEventListener("click", ()=>{
+    const payLoad = {
+        message: messageInput.value,
+        receiverId: receiver.value
+    }
+
+    socket.emit("send-message", payLoad);
+    // messageInput.value = ""
+
 })
 
 socket.on("receive-message", (message)=>{
-    messageCont.append(
-        `<div class="w-full h-13 flex items-end justify-end">
-            <div class="w-fit h-fit w-content h-10 overflow-scroll scrollbar-none p-2 w-30 h-10 bg-green-300 text-white">
-                ${message}
-            </div>  
-        </div>`
-    )
+
+    console.log(message)
+    const box = document.createElement('div');
+    box.className = "w-full h-13 flex items-end justify-end";
+
+    const innerBox = document.createElement('div');
+    innerBox.className = "w-fit h-fit overflow-scroll scrollbar-none p-2 bg-green-300 text-white flex items-end justify-end";
+    innerBox.textContent = message;
+
+    console.log(innerBox.className);
+
+    box.appendChild(innerBox);
+    messageCont.appendChild(innerBox);
 })

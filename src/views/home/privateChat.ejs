@@ -62,13 +62,13 @@
                     <% messages.forEach((elem)=> {%>
                         <% if(elem.senderId === user.id) {%>
                             <div class="w-full h-13">
-                                <div class="w-fit h-fit h-10 overflow-scroll scrollbar-none p-2 w-30 h-10 bg-blue-300 text-white">
+                                <div class="w-fit h-fit overflow-scroll scrollbar-none p-2 bg-blue-300 text-white">
                                     <%= elem.message %>
                                 </div>  
                             </div>
                         <%}else { %>
                             <div class="w-full h-13 flex items-end justify-end">
-                                <div class="w-fit h-fit w-content h-10 overflow-scroll scrollbar-none p-2 w-30 h-10 bg-green-300 text-white">
+                                <div class="w-fit h-fit overflow-scroll scrollbar-none p-2 bg-green-300 text-white">
                                     <%= elem.message %>
                                 </div>  
                             </div>
@@ -83,8 +83,9 @@
 
             <!-- Right bottom part -->
             <div class="w-full h-11 flex items-center justify-center">
-                <form class="flex items-center justify-center w-full h-full" action="/chat/<%=receiver.id%>" method="post">
-                    <input class="mx-1 p-2 h-full w-full bg-white border border-black rounded-xl" type="text" name="message" placeholder="message">
+                <form id="textForm" class="flex items-center justify-center w-full h-full" action="/chat/<%=receiver.id%>" method="post">
+                    <input id="receiver" type="hidden" value="<%-receiver.id%>">
+                    <input id="messageInput" class="mx-1 p-2 h-full w-full bg-white border border-black rounded-xl" type="text" name="message" placeholder="message">
                     <button id="sendBtn" class="mx-1 h-10 w-11 rounded-full bg-green-600" type="submit">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
